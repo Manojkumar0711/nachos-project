@@ -49,6 +49,8 @@
 #define SC_Signal 53
 #define SC_GetPid 54
 #define SC_Abs 55
+#define SC_Sleep 57
+
 #ifndef IN_ASM
 
 /* The system call interface.  These are the operations the Nachos
@@ -69,7 +71,7 @@ void Halt();
  */
 
 int Add(int op1, int op2);
-unsigned int Abs(int num);
+
 int ReadNum();
 
 void PrintNum(int num);
@@ -209,6 +211,10 @@ int ThreadJoin(ThreadId id);
  * Deletes current thread and returns ExitCode to every waiting lokal thread.
  */
 void ThreadExit(int ExitCode);
+
+unsigned int Abs(int num);
+
+void Sleep(int time);
 
 #endif /* IN_ASM */
 
