@@ -17,7 +17,6 @@
 #include <stdlib.h>
 
 #define INT32_MIN 0
-
 void SysHalt() { kernel->interrupt->Halt(); }
 
 int SysAdd(int op1, int op2) { return op1 + op2; }
@@ -25,6 +24,7 @@ int SysAbs(int op1) {
     if (op1 < 0) return -op1;
     return op1;
 }
+
 int SysReadNum() {
     readUntilBlank();
 
@@ -193,6 +193,14 @@ int SysSeek(int seekPos, int fileId) {
         return -1;
     }
     return kernel->fileSystem->Seek(seekPos, fileId);
+}
+
+void SysSleep(int time){
+    if(time <= 0){
+        return;
+    }
+    int waketime = kernel->stats->totalTicks + time;
+    kernel->scheduler->putToSleep(kernel->currentThread,waketime);
 }
 
 int SysExec(char* name) {
