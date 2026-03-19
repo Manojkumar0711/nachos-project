@@ -10,7 +10,7 @@ Nashos version: 4.0
 To install: run `bash full_install.sh`. In case of error, you might want to run the installation step by step via:
 ```bash
 # Install building tools like make, g++
-bash install_building_tools.sh
+usr folder has to be downloaded
 
 # Build the nachos
 bash build_nachos.sh
