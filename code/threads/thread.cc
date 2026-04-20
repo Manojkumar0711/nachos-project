@@ -21,7 +21,10 @@
 #include "switch.h"
 #include "synch.h"
 #include "sysdep.h"
-
+#include "stdlib.h"
+#include "machine.h"
+#include "thread.h"
+#include "system.h"
 // this is put at the top of the execution stack, for detecting stack overflows
 const int STACK_FENCEPOST = 0xdedbeef;
 
@@ -46,6 +49,18 @@ Thread::Thread(char *threadName, bool _has_dynamic_name /*=false*/) {
                                  // of machine registers
     }
     space = NULL;
+}
+
+Thread::Thread(char *threadName, int pDes, bool _has_dynamic_name) {
+    has_dynamic_name = _has_dynamic_name;
+    name = threadName;
+    stackTop = NULL;
+    stack = NULL;
+    status = JUST_CREATED;
+    for (int i = 0; i < MachineStateSize; i++) { machineState[i] = NULL; }
+    space = NULL;
+    priority = rand() % 10 + 1;
+    pipeDesNum = pDes; // Assign the inherited pipe descriptor
 }
 
 //----------------------------------------------------------------------
